@@ -13,10 +13,12 @@ const SignUpPage = () => {
   });
   return (
     <React.Fragment>
-      <UserForm formType="signup" action={signup} />
+      <UserForm formType="Signup" action={signup} />
       {loading && <Loading />}
       {error && <p>Error!! Try again</p>}
     </React.Fragment>
   );
 };
 export default SignUpPage;
+// {
+// }
