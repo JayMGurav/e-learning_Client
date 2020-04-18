@@ -14,10 +14,9 @@ const SignInPage = (props) => {
   });
   return (
     <React.Fragment>
-      <UserForm formType={{ email: true, password: true }} action={signin} />
+      <UserForm formType="signin" action={signin} />
       {loading && <Loading />}
       {error && <p>Error!! Try again</p>}
-      <h1>SignIn</h1>
     </React.Fragment>
   );
 };
