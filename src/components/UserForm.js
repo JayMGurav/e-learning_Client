@@ -9,6 +9,7 @@ import PhoneInput, {
   isPossiblePhoneNumber,
 } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import Loading from './Loading.js';
 
 const validate = (values) => {
   const errors = {};
@@ -53,7 +54,11 @@ function UserForm(props) {
         : { email: '', password: '' },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      props.action({
+        variables: {
+          ...values,
+        },
+      });
     },
   });
   return (
@@ -81,9 +86,7 @@ function UserForm(props) {
               margin-top: 1.5rem;
             }
           }
-          p.error {
-            color: red;
-          }
+
           input {
             padding: 0.4rem 1rem;
             border: none;
@@ -94,6 +97,9 @@ function UserForm(props) {
             font-size: 1rem;
           }
           button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 1rem 0;
             padding: 0.6rem 1rem;
             border: none;
@@ -103,6 +109,12 @@ function UserForm(props) {
       `}
     >
       <form onSubmit={formik.handleSubmit}>
+        {props.error &&
+          props.error.graphQLErrors.map(({ message }, i) => (
+            <p className="gqerror" key={i}>
+              {message}
+            </p>
+          ))}
         <h5>
           Sign {props.formType === 'signup' ? 'up' : 'in'} with AIOC{' '}
           <span>.</span>
@@ -189,6 +201,8 @@ function UserForm(props) {
             <span>&rarr;</span>
           </Link>
         )}
+        <br />
+        {props.loading && <Loading />}
       </form>
     </div>
   );

@@ -1,7 +1,11 @@
 import React from 'react';
 
-const CourseDetailsPage = (props) => {
-  return <h1>CourseDetailsPage</h1>;
-};
+function CourseDetail(props) {
+  return (
+    <div>
+      <h1>courseDetail</h1>
+    </div>
+  );
+}
 
-export default CourseDetailsPage;
+export default CourseDetail;

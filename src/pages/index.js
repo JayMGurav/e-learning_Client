@@ -1,12 +1,13 @@
-import React, { Suspense } from 'react';
-import { Router } from '@reach/router';
+import React, { Suspense, useState } from 'react';
+import { Router, Redirect } from '@reach/router';
 import loadable, { lazy } from '@loadable/component';
 
 import Loading from '../components/Loading.js';
-import Layout from '../components/layout.js';
+import { PaddedDiv } from '../components/layout.js';
 import NavBar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
 import HomePage from './home.js';
+import Dashboard from './dashboard.js';
 // lazy load these pages
 const SignInPage = lazy(() => import('./signIn.js'));
 const SignUpPage = lazy(() => import('./signUp.js'));
@@ -14,11 +15,21 @@ const SignUpPage = lazy(() => import('./signUp.js'));
 //
 const CourseFeedPage = loadable(() => import('./courseFeed.js'));
 const CourseDetailsPage = loadable(() => import('./courseDetail.js'));
-function Pages() {
+
+function UnSigned() {
+  const [Signed] = useState(() => {
+    let token = localStorage.getItem('token');
+    return token;
+  });
+  if (Signed) {
+    return <Redirect to="/dashboard/courses" noThrow />;
+  }
+
   return (
-    <Layout>
+    <Suspense fallback={<Loading />}>
+      {/* <Layout> */}
       <NavBar />
-      <Suspense fallback={<Loading />}>
+      <PaddedDiv>
         <Router>
           <HomePage exact path="/" />
           <SignInPage path="/signin" />
@@ -26,16 +37,38 @@ function Pages() {
           <CourseFeedPage path="/courses" />
           <CourseDetailsPage path="/courses/:id" />
         </Router>
-        <Footer />
-      </Suspense>
-    </Layout>
+      </PaddedDiv>
+      <Footer />
+      {/* </Layout> */}
+    </Suspense>
   );
 }
 
-// const PrivateRoutes = ({ component: Component, ...rest }) => {
-// check if logged in
-// if logged in then continue with the route
-// else redirect to signin
-// };
+const Signed = () => {
+  const [Signed] = useState(() => {
+    let token = localStorage.getItem('token');
+    return token;
+  });
+  if (!Signed) {
+    return <Redirect to="../signin" noThrow />;
+  }
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <Router>
+        <Dashboard path="/*" />
+      </Router>
+    </Suspense>
+  );
+};
+
+const Pages = () => {
+  return (
+    <Router>
+      <UnSigned path="/*" />
+      <Signed path="/dashboard/*" />
+    </Router>
+  );
+};
 
 export default Pages;

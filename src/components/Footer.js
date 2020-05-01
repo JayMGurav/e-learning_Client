@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import { jsx, css } from '@emotion/core';
 import { ThemeContext } from '../Context/theme/themeContext.js';
+import Search from './Search';
 
 function Footer() {
   const { themeColors } = useContext(ThemeContext);
@@ -84,33 +85,7 @@ function Footer() {
             `}
           >
             <p>Search for courses</p>
-            <div
-              css={css`
-                display: inline-flex;
-                margin: 0.5rem 0;
-                border-radius: 8px;
-                box-shadow: 0 0.5rem 8px rgba(0, 0, 0, 0.3);
-                input {
-                  background: ${themeColors.secondaryBgColor};
-                  border: none;
-                  padding: 0.4rem 0.5rem;
-                  border-radius: 8px 0 0 8px;
-                  font-size: 1rem;
-                  flex: 0 1 2;
-                }
-                #search {
-                  padding: 0.4rem 1rem;
-                  border-radius: 0 8px 8px 0;
-                  margin: 0;
-                  flex: 0 1 2;
-                  border: 0 4px 4px 0;
-                  background: #f28705;
-                }
-              `}
-            >
-              <input type="text" />
-              <div id="search">Search</div>
-            </div>
+            <Search />
           </div>
         </div>
       </div>

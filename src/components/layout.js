@@ -15,11 +15,8 @@ const Layout = (props) => {
             margin: 0;
             padding: 0;
           }
-          ${'' /* * + * {
-                        margin: 1rem;
-                    } */}
           html,
-                    body {
+          body {
             margin: 0;
             padding: 0;
             background: ${themeColors.primaryBgColor};
@@ -38,6 +35,7 @@ const Layout = (props) => {
           }
           ::-webkit-scrollbar {
             width: 3px;
+            height: 3px;
             cursor: pointer;
           }
           ::-webkit-scrollbar-thumb {
@@ -52,7 +50,7 @@ const Layout = (props) => {
           h5,
           h6,
           strong {
-            font-weight: 900;
+            font-weight: bold;
             font-size: 2.4rem;
             letter-spacing: 0.05rem;
             margin: 1rem 0;
@@ -100,6 +98,15 @@ const Layout = (props) => {
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
               0 3px 6px rgba(0, 0, 0, 0.23);
           }
+          p.gqerror {
+            color: red;
+            margin: 0 auto;
+            text-align: center;
+          }
+          p.error {
+            color: red;
+          }
+          ,
           .fullWidth {
             width: 100%;
             height: 100vh;
@@ -108,7 +115,7 @@ const Layout = (props) => {
       />
       <main
         css={css`
-          max-width: 94vw;
+          max-width: 100vw;
           width: 100%;
           margin: 0 auto;
           padding: 0;
@@ -117,6 +124,19 @@ const Layout = (props) => {
         {props.children}
       </main>
     </Fragment>
+  );
+};
+
+export const PaddedDiv = ({ children }) => {
+  return (
+    <div
+      css={css`
+        padding: 0 calc(100% - 96vw);
+        margin: 0;
+      `}
+    >
+      {children}
+    </div>
   );
 };
 

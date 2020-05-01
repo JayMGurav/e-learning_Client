@@ -1,7 +1,6 @@
 import React from 'react';
-// import Footer from './components/Footer.js';
-// import Navbar from './components/Navbar.js';
-// import UserForm from './components/UserForm';
+import { AnimatePresence } from 'framer-motion';
+
 import Pages from './pages/index.js';
 
 import {
@@ -20,17 +19,23 @@ const httpLink = createHttpLink({ uri });
 const cache = new InMemoryCache();
 
 const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
   return {
-    ...headers,
-    authorization: localStorage.getItem('token') || '',
+    headers: {
+      ...headers,
+      authorization: token ? token : '',
+    },
   };
 });
 
 const client = new ApolloClient({
   uri,
-  cache,
-  resolvers: {},
+  credentials: 'include',
   link: authLink.concat(httpLink),
+  resolvers: {},
+  cache,
   connectToDevTools: true,
 });
 
@@ -38,7 +43,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Layout>
-        <Pages />
+        <AnimatePresence exitBeforeEnter>
+          <Pages />
+        </AnimatePresence>
       </Layout>
     </ApolloProvider>
   );
