@@ -1,24 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { ThemeContext } from '../Context/theme/themeContext.js';
-import { INC_SCORE, ADD_COURSE_SCORE } from '../gql/mutation.js';
+import { INC_SCORE } from '../gql/mutation.js';
 
 export default function Quiz({ quiz, final, courseId }) {
   const { themeColors } = useContext(ThemeContext);
   const [selectedOption, setSelectedOption] = useState(null);
   const [clicked, setClicked] = useState(false);
-
-  // const [addCourseScore] = useMutation(ADD_COURSE_SCORE, {
-  //   errorPolicy: 'all',
-  //   onCompleted: (data) => {
-  //     if (data) {
-  //       // just chill
-  //     }
-  //   },
-  // });
 
   const [incScore] = useMutation(INC_SCORE, {
     errorPolicy: 'all',
@@ -28,16 +19,6 @@ export default function Quiz({ quiz, final, courseId }) {
       }
     },
   });
-
-  // useEffect(() => {
-  //   let effect = true;
-  //   addCourseScore({
-  //     variables: { courseId: courseId },
-  //   });
-  //   return () => {
-  //     effect = false;
-  //   };
-  // }, []);
 
   return (
     <div

@@ -33,7 +33,7 @@ function BuyCourse(props) {
     errorPolicy: 'all',
     onCompleted: (data) => {
       if (data) {
-        navigate('/dashboard/mycourses');
+        navigate('/dashboard/mycourses', { replace: true });
       }
     },
   });

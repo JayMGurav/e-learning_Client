@@ -2,7 +2,8 @@
 import { jsx, css } from '@emotion/core';
 import { Fragment, useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { navigate } from '@reach/router';
+import { navigate, Link } from '@reach/router';
+import { motion } from 'framer-motion';
 
 import { GET_MY_COURSES } from '../gql/query';
 import { ThemeContext } from '../Context/theme/themeContext.js';
@@ -50,19 +51,37 @@ const MyCoursesPage = (props) => {
           `}
         >
           {data.me.coursesBought.map((course) => (
-            <div
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               key={course._id}
               css={css`
                 max-width: 30%;
-                padding: 2rem 1rem;
+                cursor: pointer;
+                word-wrap: break-word;
+
                 margin: 1rem;
                 border-radius: 8px;
                 background: ${themeColors.secondaryBgColor};
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                h1 {
+                  font-size: 2.5rem;
+                }
               `}
             >
-              <h1>{course.coursename}</h1>
-            </div>
+              <Link key={course._id} to={`/dashboard/courses/${course._id}`}>
+                <div
+                  css={css`
+                    width: 100%;
+                    height: 100%;
+                    padding: 2rem 1rem;
+                  `}
+                >
+                  <h1>{course.coursename}</h1>
+                  <span>&rarr;</span>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       )}

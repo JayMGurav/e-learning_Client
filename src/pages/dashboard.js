@@ -8,13 +8,12 @@ import { Link, Router } from '@reach/router';
 import ModeBtn from '../components/ModeBtn.js';
 import CourseFeed from '../pages/courseFeed.js';
 import CourseClicked from '../pages/courseClicked.js';
-import CartPage from '../pages/cart.js';
 import MyCoursesPage from '../pages/mycourses.js';
 import AchievementsPage from '../pages/acheivemrnts.js';
 import ProfilePage from './profilePage.js';
+import LogoDiv from '../components/Logo';
 
 import { ReactComponent as Courses } from '../images/courses.svg';
-import { ReactComponent as Cart } from '../images/cart.svg';
 import { ReactComponent as MyCourses } from '../images/mycourses.svg';
 import { ReactComponent as Achievements } from '../images/ribbon.svg';
 import { ReactComponent as Profile } from '../images/profile.svg';
@@ -114,7 +113,7 @@ const Dashboard = () => {
         `}
       >
         <header>
-          <div
+          {/* <div
             id="logo"
             css={css`
               margin: 3vh 0.5rem;
@@ -123,7 +122,8 @@ const Dashboard = () => {
               background: #707070;
               border-radius: 8px;
             `}
-          ></div>
+          ></div> */}
+          <LogoDiv />
           <span>A</span>IOC
         </header>
         <nav>
@@ -141,19 +141,7 @@ const Dashboard = () => {
               />
               Courses
             </NavLink>
-            <NavLink
-              to="/dashboard/cart"
-              themecolors={{
-                fontColor: themeColors.fontColor,
-                secondaryBgColor: themeColors.secondaryBgColor,
-              }}
-              getProps={isActive}
-            >
-              <Cart
-                style={{ width: '32px', height: '32px', fill: '#707070' }}
-              />
-              Cart
-            </NavLink>
+
             <NavLink
               to="/dashboard/mycourses"
               themecolors={{
@@ -234,7 +222,6 @@ const Dashboard = () => {
               <CourseClicked path="/courses/:id/*" />
               <AchievementsPage path="/achievements" />
               <MyCoursesPage path="/mycourses" />
-              <CartPage path="/cart" />
               <ProfilePage path="/profile" />
             </Router>
           </div>
