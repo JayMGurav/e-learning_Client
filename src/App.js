@@ -16,7 +16,9 @@ import Layout from './components/layout';
 
 const uri = process.env.API_URI || 'http://localhost:4000/api';
 const httpLink = createHttpLink({ uri });
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  resultCaching: true,
+});
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

@@ -46,8 +46,7 @@ const VideoPlayerSection = (props) => {
           height: 80vh;
         `}
       >
-        {/* AIOCuniversity/ezvamfachhergzwfn9w3 */}
-        <VideoPlayer cloudName="aiocuniversity-com" publicId={videoUrl} />
+        <VideoPlayer url={videoUrl} />
       </div>
       <div>
         <h1>{topicName}</h1>

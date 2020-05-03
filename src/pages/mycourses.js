@@ -1,18 +1,22 @@
 /**@jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { navigate, Link } from '@reach/router';
+import { Link } from '@reach/router';
 import { motion } from 'framer-motion';
 
+import Loading from '../components/Loading';
 import { GET_MY_COURSES } from '../gql/query';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 
 const MyCoursesPage = (props) => {
   const { themeColors } = useContext(ThemeContext);
-  const { loading, error, data } = useQuery(GET_MY_COURSES);
+  const { loading, error, data } = useQuery(GET_MY_COURSES, {
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all',
+  });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error!! {error.message}</p>;
   return (
     <div

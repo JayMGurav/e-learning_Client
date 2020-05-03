@@ -19,7 +19,7 @@ const GET_MY_EMAIL = gql`
 `;
 function BuyCourse(props) {
   const { themeColors } = useContext(ThemeContext);
-  const [Stoken, setToken] = useState(() => {
+  const [Stoken] = useState(() => {
     return localStorage.getItem('token');
   });
 
@@ -31,15 +31,20 @@ function BuyCourse(props) {
 
   const [buyThisCourse, { loading, error }] = useMutation(BUY_COURSE, {
     errorPolicy: 'all',
+    fetchPolicy: 'no-cache',
+
     onCompleted: (data) => {
-      if (data) {
+      if (data && data.buyCourse && data.buyCourse.email) {
+        console.log(data.buyCourse);
         navigate('/dashboard/mycourses', { replace: true });
       }
     },
   });
 
-  if (loading || loadingEmail) return <Loading />;
-  if (error || errorEmail) return <p>Error!! {error.message}</p>;
+  if (loadingEmail) return <Loading />;
+  if (loading) return <Loading />;
+  if (errorEmail) return <p>Error!! {error.message}</p>;
+  if (error) return <p>Error!! {error.message}</p>;
 
   return (
     <div
@@ -92,26 +97,41 @@ function BuyCourse(props) {
         (life time access)
         <br />
         {Stoken && emailData.me.email ? (
-          <StripeCheckout
-            name="AIOCuniversity"
-            description={`Never Stop Learning ${emailData.me.username}`}
-            amount={props.checkoutCost * 100}
-            currency="INR"
-            email={emailData.me.email}
-            token={(token) => {
-              console.log(token);
-              return buyThisCourse({
-                variables: {
-                  source: token.id,
-                  email: emailData.me.email,
-                  courseId: props.courseId,
-                },
-              });
-            }}
-            stripeKey={process.env.REACT_APP_STRIPE_PBKEY}
-          >
-            <button>Buy this course</button>
-          </StripeCheckout>
+          props.checkoutCost !== 0 ? (
+            <StripeCheckout
+              name="AIOCuniversity"
+              description={`Never Stop Learning ${emailData.me.username}`}
+              amount={props.checkoutCost * 100}
+              currency="INR"
+              email={emailData.me.email}
+              token={(token) => {
+                console.log(token);
+                return buyThisCourse({
+                  variables: {
+                    source: token.id,
+                    email: emailData.me.email,
+                    courseId: props.courseId,
+                  },
+                });
+              }}
+              stripeKey={process.env.REACT_APP_STRIPE_PBKEY}
+            >
+              <button>Buy this course</button>
+            </StripeCheckout>
+          ) : (
+            <button
+              onClick={() => {
+                return buyThisCourse({
+                  variables: {
+                    email: emailData.me.email,
+                    courseId: props.courseId,
+                  },
+                });
+              }}
+            >
+              Start Learning
+            </button>
+          )
         ) : (
           <button onClick={() => navigate('/signin')}>Buy this course</button>
         )}

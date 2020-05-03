@@ -4,6 +4,7 @@ import { Fragment, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { navigate } from '@reach/router';
 
+import Loading from '../components/Loading';
 import { GET_MY_DATA } from '../gql/query';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 
@@ -11,11 +12,11 @@ const SettingsPage = (props) => {
   const { themeColors } = useContext(ThemeContext);
   const { loading, error, data } = useQuery(GET_MY_DATA, {
     errorPolicy: 'all',
+    fetchPolicy: 'cache-and-network',
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error!! {error.message}</p>;
-  console.log(data);
   return (
     <Fragment>
       <h1>

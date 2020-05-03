@@ -1,24 +1,35 @@
-import React from 'react';
-import { Video } from 'cloudinary-react';
+import React, { useContext } from 'react';
+import ReactPlayer from 'react-player';
+import { ThemeContext } from '../Context/theme/themeContext.js';
 
 const VideoPlayer = (props) => {
+  const { themeColors } = useContext(ThemeContext);
   return (
-    <Video
-      cloudName={props.cloudName}
-      publicId={props.publicId}
+    <ReactPlayer
+      url={props.url}
+      controls={true}
+      light={true}
       width="100%"
       height="100%"
-      fluid="true"
-      preload="auto"
-      alt="hello"
+      pip={true}
+      config={{
+        youtube: {
+          playerVars: { showinfo: 1 },
+        },
+        file: {
+          attributes: {
+            controlslist: 'nodownload',
+            crossorigin: 'anonymous',
+            autoPictureInPicture: true,
+            preload: 'auto',
+          },
+        },
+      }}
+      style={{ background: themeColors.secondaryBgColor }}
       onContextMenu={(e) => {
         e.preventDefault();
         return false;
       }}
-      controls={true}
-      controlsList="nodownload"
-      sourceTypes={['m3u8', 'mp4', 'webm']}
-      colors={{ base: '#f28705', accent: '#f28705', text: '#fff' }}
     />
   );
 };

@@ -1,16 +1,15 @@
 /**@jsx jsx */
-import { useContext, useState } from 'react';
+import { useContext, Suspense, useState } from 'react';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 import { Link, Router } from '@reach/router';
+import { lazy } from '@loadable/component';
 
+import Loading from '../components/Loading.js';
 import ModeBtn from '../components/ModeBtn.js';
 import CourseFeed from '../pages/courseFeed.js';
 import CourseClicked from '../pages/courseClicked.js';
-import MyCoursesPage from '../pages/mycourses.js';
-import AchievementsPage from '../pages/acheivemrnts.js';
-import ProfilePage from './profilePage.js';
 import LogoDiv from '../components/Logo';
 
 import { ReactComponent as Courses } from '../images/courses.svg';
@@ -18,6 +17,10 @@ import { ReactComponent as MyCourses } from '../images/mycourses.svg';
 import { ReactComponent as Achievements } from '../images/ribbon.svg';
 import { ReactComponent as Profile } from '../images/profile.svg';
 import { ReactComponent as HamMenu } from '../images/menu.svg';
+
+const MyCoursesPage = lazy(() => import('../pages/mycourses.js'));
+const AchievementsPage = lazy(() => import('../pages/acheivemrnts.js'));
+const ProfilePage = lazy(() => import('./profilePage.js'));
 
 const NavLink = styled(Link)`
   display: flex;
@@ -113,7 +116,7 @@ const Dashboard = () => {
         `}
       >
         <header>
-          {/* <div
+          <div
             id="logo"
             css={css`
               margin: 3vh 0.5rem;
@@ -122,8 +125,8 @@ const Dashboard = () => {
               background: #707070;
               border-radius: 8px;
             `}
-          ></div> */}
-          <LogoDiv />
+          ></div>
+          {/* <LogoDiv /> */}
           <span>A</span>IOC
         </header>
         <nav>
@@ -217,13 +220,15 @@ const Dashboard = () => {
             <ModeBtn />
           </div>
           <div>
-            <Router>
-              <CourseFeed path="/courses" />
-              <CourseClicked path="/courses/:id/*" />
-              <AchievementsPage path="/achievements" />
-              <MyCoursesPage path="/mycourses" />
-              <ProfilePage path="/profile" />
-            </Router>
+            <Suspense fallback={<Loading />}>
+              <Router>
+                <CourseFeed path="/courses" />
+                <CourseClicked path="/courses/:id/*" />
+                <AchievementsPage path="/achievements" />
+                <MyCoursesPage path="/mycourses" />
+                <ProfilePage path="/profile" />
+              </Router>
+            </Suspense>
           </div>
         </main>
       </div>

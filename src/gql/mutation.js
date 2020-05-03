@@ -18,11 +18,7 @@ const SIGN_UP = gql`
 `;
 
 const BUY_COURSE = gql`
-  mutation buyCourseMutation(
-    $source: String!
-    $email: String!
-    $courseId: ID!
-  ) {
+  mutation buyCourseMutation($source: String, $email: String!, $courseId: ID!) {
     buyCourse(source: $source, email: $email, courseId: $courseId) {
       _id
       email

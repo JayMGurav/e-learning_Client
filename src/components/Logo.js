@@ -1,6 +1,6 @@
 /**@jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { ReactComponent as Logo } from '../images/logo.svg';
+import { ReactComponent as Logo } from '../images/play.svg';
 
 function LogoDiv() {
   return (
