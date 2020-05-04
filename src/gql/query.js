@@ -33,6 +33,9 @@ const GET_COURSES = gql`
       tags
       level
       image
+      instructor {
+        username
+      }
     }
   }
 `;

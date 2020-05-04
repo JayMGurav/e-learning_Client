@@ -69,7 +69,7 @@ function CourseDetail(props) {
         ))}
       </div>
       <p>
-        Approximately <span>{data.courseById.approxTimeToComplete} weeks </span>
+        Approximately <span>{data.courseById.approxTimeToComplete} </span>
         to complete this course.
       </p>
       <br />

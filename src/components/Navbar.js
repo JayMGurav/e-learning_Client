@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import { jsx, css } from '@emotion/core';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 
+import LogoDiv from './Logo.js';
+
 const NavLink = styled(Link)`
   padding: 0.4rem 1rem;
   margin: 0 0.5rem;
@@ -64,7 +66,7 @@ const NavBar = () => {
               padding: 0;
             `}
           >
-            <div
+            {/* <div
               id="logo"
               css={css`
                 flex: 0 1 1;
@@ -73,7 +75,8 @@ const NavBar = () => {
                 background: #707070;
                 border-radius: 8px;
               `}
-            ></div>
+            ></div> */}
+            <LogoDiv />
           </NavLink>
           <div
             css={css`

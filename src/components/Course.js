@@ -8,7 +8,7 @@ const CourseComponent = (props) => {
   let courseWords = props.coursename.split(' ');
   let remainingWords = courseWords.splice(1).join(' ');
   return (
-    <Link to={`/dashboard/courses/${props.id}/`}>
+    <Link to={props.url + `${props.id}/`}>
       <div
         css={css`
           width: 100%;
@@ -47,7 +47,7 @@ const CourseComponent = (props) => {
             }
           `}
         >
-          <p>Jay Gurav</p>
+          <p>{props.instructor}</p>
           <p>&#8226; {props.level}</p>
         </div>
         {props.tags.map((tag, key) => (

@@ -27,7 +27,7 @@ function BuyCourse(props) {
     loading: loadingEmail,
     error: errorEmail,
     data: emailData,
-  } = useQuery(GET_MY_EMAIL, { errorPolicy: 'all' });
+  } = useQuery(GET_MY_EMAIL, { errorPolicy: 'all', skip: !Stoken });
 
   const [buyThisCourse, { loading, error }] = useMutation(BUY_COURSE, {
     errorPolicy: 'all',
@@ -43,7 +43,7 @@ function BuyCourse(props) {
 
   if (loadingEmail) return <Loading />;
   if (loading) return <Loading />;
-  if (errorEmail) return <p>Error!! {error.message}</p>;
+  if (errorEmail) return <p>Error!! {errorEmail.message}</p>;
   if (error) return <p>Error!! {error.message}</p>;
 
   return (

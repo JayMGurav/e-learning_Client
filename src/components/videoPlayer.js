@@ -14,7 +14,7 @@ const VideoPlayer = (props) => {
       pip={true}
       config={{
         youtube: {
-          playerVars: { showinfo: 1 },
+          playerVars: { showinfo: 1, crossorigin: 'anonymous' },
         },
         file: {
           attributes: {

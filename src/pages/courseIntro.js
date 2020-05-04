@@ -22,6 +22,8 @@ export default function CourseIntro(props) {
 
   const { loading, error, data } = useQuery(GET_COURSE_CONTENT_BY_ID, {
     variables: { id: props.id },
+    errorPolicy: 'all',
+    fetchPolicy: 'network-only',
   });
   if (loading) return <Loading />;
   if (error) return <p>Error!! {error.message}</p>;

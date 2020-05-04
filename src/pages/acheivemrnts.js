@@ -4,6 +4,7 @@ import { Fragment, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 
 import { ThemeContext } from '../Context/theme/themeContext.js';
+import VideoPlayer from '../components/videoPlayer.js';
 
 const AchievementPage = (props) => {
   return (
@@ -12,6 +13,7 @@ const AchievementPage = (props) => {
         My Achievements <span>.</span>
       </h1>
       {/* <CourseDetailPage /> */}
+      <VideoPlayer url="https://www.youtube.com/watch?v=aYv_I1tn7wo" />
     </Fragment>
   );
 };

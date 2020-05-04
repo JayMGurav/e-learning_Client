@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 import { GET_MY_DATA } from '../gql/query';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 
-const SettingsPage = (props) => {
+const ProfilePage = (props) => {
   const { themeColors } = useContext(ThemeContext);
   const { loading, error, data } = useQuery(GET_MY_DATA, {
     errorPolicy: 'all',
@@ -77,4 +77,4 @@ const SettingsPage = (props) => {
   );
 };
 
-export default SettingsPage;
+export default ProfilePage;

@@ -36,7 +36,7 @@ const MyCoursesPage = (props) => {
           align-items: center;
           justify-content: center;
           padding: 2rem;
-          margin: 2rem 0;
+          margin: 2rem;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
           h1 {
             font-size: 4rem;
@@ -51,6 +51,7 @@ const MyCoursesPage = (props) => {
           css={css`
             width: 100%;
             padding: 1rem;
+            display: flex;
             overflow-x: auto;
           `}
         >
@@ -73,7 +74,7 @@ const MyCoursesPage = (props) => {
                 }
               `}
             >
-              <Link key={course._id} to={`/dashboard/courses/${course._id}`}>
+              <Link key={course._id} to={`/dashboard/courses/${course._id}/`}>
                 <div
                   css={css`
                     width: 100%;

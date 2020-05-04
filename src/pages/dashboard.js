@@ -8,9 +8,8 @@ import { lazy } from '@loadable/component';
 
 import Loading from '../components/Loading.js';
 import ModeBtn from '../components/ModeBtn.js';
-import CourseFeed from '../pages/courseFeed.js';
 import CourseClicked from '../pages/courseClicked.js';
-import LogoDiv from '../components/Logo';
+import LogoDiv from '../components/Logo.js';
 
 import { ReactComponent as Courses } from '../images/courses.svg';
 import { ReactComponent as MyCourses } from '../images/mycourses.svg';
@@ -18,6 +17,7 @@ import { ReactComponent as Achievements } from '../images/ribbon.svg';
 import { ReactComponent as Profile } from '../images/profile.svg';
 import { ReactComponent as HamMenu } from '../images/menu.svg';
 
+const CourseFeed = lazy(() => import('../pages/courseFeed.js'));
 const MyCoursesPage = lazy(() => import('../pages/mycourses.js'));
 const AchievementsPage = lazy(() => import('../pages/acheivemrnts.js'));
 const ProfilePage = lazy(() => import('./profilePage.js'));
@@ -116,17 +116,19 @@ const Dashboard = () => {
         `}
       >
         <header>
-          <div
+          {/* <div
             id="logo"
             css={css`
               margin: 3vh 0.5rem;
               width: 40px;
               height: 40px;
+              padding: 0;
               background: #707070;
               border-radius: 8px;
             `}
-          ></div>
-          {/* <LogoDiv /> */}
+          > */}
+          <LogoDiv />
+          {/* </div> */}
           <span>A</span>IOC
         </header>
         <nav>

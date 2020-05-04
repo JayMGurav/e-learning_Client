@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../Context/theme/themeContext.js';
 import { lazy } from '@loadable/component';
 import { motion } from 'framer-motion';
@@ -36,7 +36,18 @@ const stagger = {
 };
 
 const CourseFeed = (props) => {
-  const { loading, error, data } = useQuery(GET_COURSES);
+  const { loading, error, data } = useQuery(GET_COURSES, {
+    errorPolicy: 'all',
+    fetchPolicy: 'network-only',
+  });
+  const [url, setUrl] = useState(() => {
+    let token = localStorage.getItem('token');
+    if (token) {
+      return '/dashboard/courses/';
+    } else {
+      return '/courses/';
+    }
+  });
 
   const { themeColors } = useContext(ThemeContext);
   if (loading) {
@@ -73,56 +84,60 @@ const CourseFeed = (props) => {
           flex-wrap: wrap;
         `}
       >
-        {data.courses.map(({ _id, image, coursename, level, tags, topic }) => (
-          <motion.div
-            key={_id}
-            whileHover={{
-              scale: 1.05,
-            }}
-            whileTap={{ scale: 0.95 }}
-            variants={fadeInUp}
-            css={css`
-              max-width: 22rem;
-              padding: 1.5rem;
-              margin: 6rem 0;
-              border-radius: 8px;
-              background: ${themeColors.secondaryBgColor};
-              color: ${themeColors.secondaryFontColor};
-              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-              display: inline-flex;
-              flex-direction: column;
-              flex-wrap: wrap;
-              justify-content: center;
-              align-items: center;
-              cursor: pointer;
-              img {
-                height: 150px;
-                border: none;
-                box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        {data.courses.map(
+          ({ _id, image, instructor, coursename, level, tags, topic }) => (
+            <motion.div
+              key={_id}
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{ scale: 0.95 }}
+              variants={fadeInUp}
+              css={css`
+                max-width: 22rem;
+                padding: 1.5rem;
+                margin: 6rem 0;
                 border-radius: 8px;
-                margin-top: -20%;
-                background: ${themeColors.primaryBgColor};
-              }
-              p.tags {
-                background: ${themeColors.primaryBgColor};
+                background: ${themeColors.secondaryBgColor};
                 color: ${themeColors.secondaryFontColor};
-                border-radius: 4px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
                 display: inline-flex;
-                margin: 0.8rem 0.5rem 0.5rem 0;
-                padding: 0.2rem 0.5rem;
-              }
-            `}
-          >
-            <Course
-              coursename={coursename}
-              id={_id.toString()}
-              tags={tags}
-              topic={topic}
-              level={level}
-              image={image}
-            />
-          </motion.div>
-        ))}
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                img {
+                  height: 150px;
+                  border: none;
+                  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+                  border-radius: 8px;
+                  margin-top: -20%;
+                  background: ${themeColors.primaryBgColor};
+                }
+                p.tags {
+                  background: ${themeColors.primaryBgColor};
+                  color: ${themeColors.secondaryFontColor};
+                  border-radius: 4px;
+                  display: inline-flex;
+                  margin: 0.8rem 0.5rem 0.5rem 0;
+                  padding: 0.2rem 0.5rem;
+                }
+              `}
+            >
+              <Course
+                coursename={coursename}
+                id={_id.toString()}
+                tags={tags}
+                topic={topic}
+                level={level}
+                image={image}
+                instructor={instructor.username}
+                url={url}
+              />
+            </motion.div>
+          )
+        )}
       </motion.div>
     </motion.div>
   );

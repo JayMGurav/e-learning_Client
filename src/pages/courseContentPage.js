@@ -17,6 +17,7 @@ const CourseContentPage = (props) => {
   const { themeColors } = useContext(ThemeContext);
   const { loading, error, data } = useQuery(GET_COURSE_CONTENT_BY_ID, {
     variables: { id: props.id },
+    fetchPolicy: 'cache-and-network',
   });
 
   if (loading) {
